@@ -1,0 +1,1 @@
+{"ast":null,"code":"import { gateway as MoltinGateway } from '@moltin/sdk';\nvar Moltin = MoltinGateway({\n  client_id: 'j6hSilXRQfxKohTndUuVrErLcSJWP15P347L6Im0M4'\n});\nexport var getProducts = function getProducts() {\n  return Moltin.Products.With('main_image').All();\n};","map":null,"metadata":{},"sourceType":"module"}
