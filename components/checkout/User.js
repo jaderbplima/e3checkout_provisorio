@@ -1,6 +1,11 @@
 import { Component } from 'react'
 import { Grid, Segment, Button, Loader, Dimmer, Form, Input, Icon, Responsive, Header, Step, Label, Radio, Accordion, Table, Item, Image} from 'semantic-ui-react'
+import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { showUserEdit, finishUserEdit } from '../../actions/checkout'
+
 import 'react-credit-cards/es/styles-compiled.css'
+
 
 function sleep(ms) {
   return new Promise(resolve => setTimeout(resolve, ms));
@@ -9,37 +14,31 @@ function sleep(ms) {
 class User extends Component {
   constructor() {
     super()
-    this.state = {
-      user: {
-        segmentLoading: false,
-        buttonLoading: false,
-        status: 'ok'
-      },
-    }
   }
-  handleClickOnEditUser = async (e) => {
+  handleClickOnEdit = (e) => {
     e.preventDefault();
-    this.setState({ user: { segmentLoading: true, status: 'ok' }})
-    await sleep(2000);
-    this.setState({ user: { segmentLoading: false, status: 'editing' }})
+    console.log('handleClickOnEdit')
+    const { showUserEdit } = this.props
+    showUserEdit()
   }
-  handleClickOnEditUser2 = async (e) => {
+  handleClickOnButton = async (e) => {
     e.preventDefault();
-    this.setState({ user: { buttonLoading: true, status: 'editing' }})
-    await sleep(2000);
-    this.setState({ user: { status: 'ok', buttonLoading: false }})
+    console.log('handleClickOnButton')
+    const { finishUserEdit } = this.props
+    finishUserEdit()
   }
   render(){
+    const disabled = this.props.userSegment.view == 'disabled' ? true : false
     return (
       <>
-        {(!this.props.mobile && this.state.user.status === 'ok') && (
-          <Segment.Group >
-            {this.state.user.segmentLoading && (
+        {(['enabled', 'disabled'].includes(this.props.userSegment.view)) && (
+          <Segment.Group>
+            {this.props.userSegment.loading && (
               <Dimmer active inverted>
                 <Loader size='small'>Loading</Loader>
               </Dimmer>
             )}
-            <Segment onClick={this.handleClickOnEditUser} style={{cursor: "pointer"}}>
+            <Segment disabled={disabled} onClick={this.handleClickOnEdit} style={{cursor: "pointer"}}>
               <Header as='h4'>
                 <Icon name='user' />
                 <Header.Content>
@@ -49,7 +48,7 @@ class User extends Component {
               <p style={{fontSize: '12px'}}>Solicitamos apenas as informações essenciais para a realização da compra. </p>
               <p>+ alterar informações</p>
             </Segment>
-            <Segment>
+            <Segment disabled={disabled}>
               <Header size='small' style={{margin: 0}}>Jader Bruno Pereira Lima</Header>
               <p style={{margin: 0}}>jaderpereiralima@gmail.com</p>
               <p style={{margin: 0}}>CPF 39137790862</p>
@@ -57,9 +56,9 @@ class User extends Component {
             </Segment>
           </Segment.Group>
         )}
-        {(this.props.mobile || this.state.user.status === 'editing') && (
+        {(this.props.userSegment.view === 'edit') && (
           <Segment.Group >
-            {this.state.user.segmentLoading && (
+            {this.props.userSegment.loading && (
               <Dimmer active inverted>
                 <Loader size='small'>Loading</Loader>
               </Dimmer>
@@ -114,7 +113,7 @@ class User extends Component {
               </Form>
             </Segment>
             <Segment>
-              <Button fluid color='blue' onClick={this.handleClickOnEditUser2} loading={this.state.user.buttonLoading}>
+              <Button fluid color='blue' onClick={this.handleClickOnButton} loading={this.props.userSegment.buttonLoading}>
                 Continuar<Icon name='arrow right'/>
               </Button>
             </Segment>
@@ -125,4 +124,16 @@ class User extends Component {
   }
 }
 
-export default User
+function mapStateToProps (store) {
+  const { checkoutState } = store
+  const { userSegment } = checkoutState
+  return { userSegment }
+}
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ showUserEdit, finishUserEdit }, dispatch)
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(User)
