@@ -4,10 +4,13 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "dev": "next",
+    "dev": "node server.js",
     "build": "next build",
-    "gcp-build": "next build",
-    "start": "next start"
+    "gcp-build": "npm run build",
+    "start": "node server.js",
+    "start-local": "NODE_ENV=production PORT=8080 node server.js",
+    "lint": "eslint .",
+    "test": "echo \"Error: no test specified\" && exit 1"
   },
   "keywords": [],
   "author": "",
@@ -16,10 +19,17 @@
     "@moltin/sdk": "^3.23.0",
     "@zeit/next-css": "^1.0.1",
     "babel-plugin-styled-components": "^1.10.6",
+    "compression": "^1.7.4",
+    "express": "^4.17.1",
     "next": "^9.0.2",
+    "prop-types": "^15.7.2",
     "react": "^16.8.6",
     "react-credit-cards": "^0.7.0",
     "react-dom": "^16.8.6",
+    "react-redux": "^5.0.1",
+    "redux": "^3.6.0",
+    "redux-devtools-extension": "^2.13.2",
+    "redux-thunk": "^2.3.0",
     "semantic-ui-react": "^0.87.3",
     "styled-components": "^4.3.2"
   }

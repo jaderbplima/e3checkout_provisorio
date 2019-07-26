@@ -12,7 +12,7 @@ class Steps extends Component {
           <Grid.Column>
             <Segment.Group >
               <Segment onClick={this.handleClickOnEditUser} style={{cursor: "pointer"}}>
-                1. Dados Pessoais <Icon name='check' color='green'/>
+                1. Dados Pessoais<Icon name='check' color='green'/>
               </Segment>
             </Segment.Group>
           </Grid.Column>

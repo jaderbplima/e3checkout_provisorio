@@ -1,5 +1,6 @@
 import { Component } from 'react'
 import { Grid, Segment, Button, Loader, Dimmer, Form, Input, Icon, Responsive, Header, Step, Label, Radio, Accordion, Table, Item, Image} from 'semantic-ui-react'
+import { connect } from 'react-redux'
 
 class Summary extends Component {
   constructor() {
@@ -9,6 +10,11 @@ class Summary extends Component {
     return (
       <>
         <Segment.Group>
+          {this.props.checkoutState.loading && (
+            <Dimmer active inverted>
+              <Loader size='small'>Loading</Loader>
+            </Dimmer>
+          )}
           <Segment>
             <Header as='h4'>
               <Icon name='info' />
@@ -26,7 +32,7 @@ class Summary extends Component {
                       </Header.Content>
                     </Header>
                   </Table.Cell>
-                  <Table.Cell textAlign='right'>R$ 169,00</Table.Cell>
+                  <Table.Cell textAlign='right'>{this.props.checkoutState.subTotal}</Table.Cell>
                 </Table.Row>
                 <Table.Row>
                   <Table.Cell>
@@ -109,4 +115,12 @@ class Summary extends Component {
     )
   }
 }
-export default Summary
+
+function mapStateToProps (store) {
+  const { checkoutState } = store
+  return { checkoutState }
+}
+
+export default connect(
+  mapStateToProps
+)(Summary)

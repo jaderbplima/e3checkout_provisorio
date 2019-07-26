@@ -1,8 +1,12 @@
 import { Component } from 'react'
 import { Grid, Segment, Button, Form, Input, Icon, Responsive, Header, Label, Radio, Accordion, Select, Dimmer, Loader } from 'semantic-ui-react'
 import Cards from 'react-credit-cards';
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import 'react-credit-cards/es/styles-compiled.css'
 import { formatMoney, sleep } from '../../lib/utils'
+import { incSubTotal } from '../../actions/checkout'
+
 
 class Payment extends Component {
   constructor() {
@@ -44,6 +48,11 @@ class Payment extends Component {
     newState.card[e.target.name] = e.target.value;
     newState.card.focused = e.target.name;
     this.setState(newState)
+  }
+
+  incrementSubtotal = () => {
+    const { incSubTotal } = this.props
+    incSubTotal()
   }
   render(){
     return (
@@ -181,7 +190,7 @@ class Payment extends Component {
                   O prazo de entrega passa a ser contado somente após a confirmação do pagamento.
                 </p>
                 <Header size='small' style={{margin: 0}} color='green'>Valor do boleto: R$ 169,00</Header>
-                <Button fluid color='green'>
+                <Button fluid color='green' onClick={() => this.incrementSubtotal()}>
                   <Icon name='lock'/>Comprar agora 
                 </Button>
               </Accordion.Content>
@@ -278,4 +287,11 @@ class Payment extends Component {
     )
   }
 }
-export default Payment
+
+const mapDispatchToProps = dispatch =>
+  bindActionCreators({ incSubTotal }, dispatch)
+
+export default connect(
+  null,
+  mapDispatchToProps
+)(Payment)

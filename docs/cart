@@ -1,0 +1,100 @@
+checkoutPage: {
+  userSegment: {
+    loading
+    buttonLoading
+  }
+  shipmentSegment: {
+    loading
+    buttonLoading
+    newAddress: {
+      
+    }
+    addresses: {
+      [
+        street
+        neighborhood
+        city
+        state
+        zipCode
+        receiverName
+        loading
+      ]
+    }
+    shipmentOptions: {
+      [
+        {
+          title
+          shipmentTime
+          price
+          loading
+        }
+      ]
+    }
+  }
+  paymentSegment: {
+    loading
+    buttonLoading
+  }
+  couponSegment: {
+    loading
+    buttonLoading
+  }
+  summarySegment: {
+    loading
+    buttonLoading
+  }
+}
+
+
+checkout: {
+  user: {
+    name
+    email
+    cpf
+    phone
+  },
+  address: {
+    street
+    neighborhood
+    city
+    state
+    zipCode
+    receiverName
+  },
+  shipmentOption: {
+    title
+    shipmentTime
+    price
+  },
+  payment: {
+    method
+    boletoDiscount
+    bankTransferDiscount
+    card: {
+      number
+      expiry
+      name
+      cvc
+      cpf
+      istallments
+    }
+  },
+  coupon: {
+    name
+    discount
+  },
+  items: [
+    {
+      name
+      quantity
+      price
+    }
+  ],
+  summary: {
+    subTotal
+    couponDiscount
+    paymentDiscount
+    shipment
+    total
+  }
+}

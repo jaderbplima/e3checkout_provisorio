@@ -32,7 +32,7 @@ class Checkout extends Component {
     return (
       <>
         {/* MOBILE */}
-        <Responsive as={Grid} maxWidth={991}>
+        <Responsive maxWidth={991}>
           <Grid>
             <Steps />
             <Grid.Row>
@@ -47,7 +47,7 @@ class Checkout extends Component {
           </Grid>
         </Responsive>
         {/* COMPUTER */}
-        <Responsive as={Grid} minWidth={992}>
+        <Responsive minWidth={992}>
           <Grid>
             <Grid.Row columns={3}>
               <Grid.Column>
